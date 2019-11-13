@@ -13,19 +13,38 @@ export default function reducer(state, action) {
           updatedAnswer,
           ...state.answers.slice(updatedAnswerIndex + 1)
         ];
-        localStorage.setItem('answers', JSON.stringify(newAnswers));
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            answers: newAnswers
+          })
+        );
         return {
           ...state,
           answers: newAnswers
         };
       } else {
-        localStorage.setItem('answers', JSON.stringify([...state.answers, action.payload]));
+        localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            answers: [...state.answers, action.payload]
+          })
+        );
         return {
           ...state,
           answers: [...state.answers, action.payload]
         };
       }
     case "ADD_DATA":
+      localStorage.setItem(
+          "state",
+          JSON.stringify({
+            ...state,
+            data: action.payload
+          })
+        );
       return {
         ...state,
         data: action.payload
@@ -36,21 +55,21 @@ export default function reducer(state, action) {
         correct: action.payload
       };
     case "RESET":
-        return {
+      return {
         ...state,
         reset: action.payload,
         answers: []
-        };
+      };
     case "SET_TRUE_ANSWER":
-        return {
+      return {
         ...state,
         trueAnswer: action.payload
-        };
+      };
     case "SET_FALSE_ANSWER":
-            return {
+      return {
         ...state,
         falseAnswer: action.payload
-        };
+      };
     default:
       return state;
   }

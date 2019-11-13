@@ -9,7 +9,7 @@ import GoodMark from "./GoodMark";
 import { Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { withRouter } from "react-router";
-import Answers from './Answer.jsx'
+import Answers from './ExpansionPanel.jsx'
 
 
 

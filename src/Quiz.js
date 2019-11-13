@@ -12,7 +12,7 @@ import axios from "axios";
 import Question from "./Views/Question";
 import QuizContext from "./context";
 import _ from "lodash";
-import Dialog from './Components/Dialog'
+import Dialog from "./Components/Dialog";
 import { withRouter } from "react-router";
 
 function Copyright() {
@@ -103,7 +103,7 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium
   };
 }
-function Quiz({history}) {
+function Quiz({ history }) {
   const classes = useStyles();
 
   const { state, dispatch } = useContext(QuizContext);
@@ -141,7 +141,7 @@ function Quiz({history}) {
   const reset = () => {
     dispatch({ type: "RESET", payload: true });
   };
-  const countAnswer = () =>{
+  const countAnswer = () => {
     let correctValue = { ...state.correct };
     let answerValue = { ...state.answer };
     correctValue = state.correct.map(({ id, correct }) => {
@@ -153,32 +153,45 @@ function Quiz({history}) {
       return { id, correct };
     });
 
-    let presentsAnswer = _.intersectionWith(correctValue, answerValue, _.isEqual);
-    let differentAnswer = _.differenceWith(correctValue, answerValue, _.isEqual);
-    console.log(presentsAnswer)
-    console.log(differentAnswer)
-    dispatch({ type: "SET_TRUE_ANSWER", payload: presentsAnswer});
-    dispatch({ type: "SET_FALSE_ANSWER", payload: differentAnswer});
-    history.push("/results")
-  }
+    let presentsAnswer = _.intersectionWith(
+      correctValue,
+      answerValue,
+      _.isEqual
+    );
+    let differentAnswer = _.differenceWith(
+      correctValue,
+      answerValue,
+      _.isEqual
+    );
+    console.log(presentsAnswer);
+    console.log(differentAnswer);
+    dispatch({ type: "SET_TRUE_ANSWER", payload: presentsAnswer });
+    dispatch({ type: "SET_FALSE_ANSWER", payload: differentAnswer });
+    history.push("/results");
+  };
 
   const checkAnswer = e => {
     e.preventDefault();
-    
+
     if (state.answers.length < state.correct.length) {
-      handleOpen()
+      handleOpen();
     } else {
-        countAnswer()
+      countAnswer();
     }
     // dispatch({ type: "RESET", payload: true });
   };
 
-  
-
   return (
     <QuizContext.Provider value={{ state, dispatch }}>
-    {open && <Dialog countAnswer={countAnswer} open={open} handleOpen={handleOpen} handleClose={handleClose}/>}
-    {console.log(state.answers)}
+      {open && (
+        <Dialog
+          countAnswer={countAnswer}
+          open={open}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+        />
+      )}
+      {console.log(state.answers)}
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -190,24 +203,21 @@ function Quiz({history}) {
             <form className={classes.form} onSubmit={checkAnswer} noValidate>
               <div className="App">
                 {state.data.length > 0 &&
-                  state.data.map(({ question, answers, id, type}) => (
+                  state.data.map(({ question, answers, id, type }) => (
                     <Question
                       key={id}
                       question={question}
                       options={answers}
                       type={type}
                       id={id}
-                     
                     />
                   ))}
-              
               </div>
               <Button
                 className={classes.button}
                 variant="contained"
                 color="primary"
                 type="submit"
-                
               >
                 Finish Quiz
               </Button>
@@ -218,7 +228,7 @@ function Quiz({history}) {
                 type="button"
                 onClick={reset}
               >
-                  reset
+                reset
               </Button>
             </form>
           </div>
@@ -231,4 +241,4 @@ function Quiz({history}) {
     </QuizContext.Provider>
   );
 }
-export default withRouter(Quiz)
+export default withRouter(Quiz);

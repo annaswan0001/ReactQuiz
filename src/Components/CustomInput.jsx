@@ -20,11 +20,14 @@ function CustomInput({ id }) {
   };
 
   useEffect(()=>{
-    const answers = localStorage.getItem('answers');
-    if (serializedState === null){
-      return undefined
+    const state = localStorage.getItem('state');
+    if (state === null){
+      return 
     }
-    return JSON.parse(serializedState);
+    const answersLocalStorage = JSON.parse(state);
+    console.log(answersLocalStorage)
+    // const valueFromLocalStorage = answersLocalStorage.map(idLocal=>idLocal===id)
+    // console.log("значение локал",valueFromLocalStorage)
   })
   useEffect(() => {
     if (value.length > 0) {
