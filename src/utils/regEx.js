@@ -1,0 +1,1 @@
+export const re = /^[a-zA-Z]+$/; //RegEx - only english letters

@@ -1,0 +1,70 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "question": "When React sees an element representing a user-defined component, it passes JSX attributes to this component as a single object. We call this object...",
+      "answers": ["props"],
+      "correct": ["props"],
+      "type": "input"
+    },
+    {
+      "id": 2,
+      "question": "An object that lets you store unique values of any type, whether primitive values or object references",
+      "answers": ["set"],
+      "correct": ["set"],
+      "type": "input"
+    },
+    {
+      "id": 3,
+      "question": "Invok immediately after a component is mounted (first insert into the tree)",
+      "answers": [
+        "componentWillmount()",
+        "componentDidApdate()",
+        "constructor()",
+        "componentDidMount()"
+      ],
+      "correct": ["componentDidMount()"],
+      "type": "radio"
+    },
+    {
+      "id": 4,
+      "question": "What words are concerned with React Library",
+      "answers": [
+        { "text": "NgModule" },
+        { "text": "State" },
+        { "text": "Props" },
+        { "text": "Hooks" }
+      ],
+      "correct": [ "State","Props","Hooks" ],
+      "type": "checkbox"
+    },
+    {
+      "id": 5,
+      "question": "Primitive variable in JS are:",
+      "answers": [
+        "String",
+        "Number",
+        "Array",
+        "Boolean",
+        "Null",
+        "Object",
+        "Map"
+      ],
+      "correct": ["String", "Number", "Boolean", "Null"],
+      "type": "select"
+    },
+    {
+      "id": 6,
+      "question": "New Array(5).toString()?",
+      "answers": [
+        "[]",
+        "[]",
+        ", , , ,",
+        "{}"
+      ],
+      "correct": [", , , ,"],
+      "type": "radio"
+    }
+    
+  ]
+}
