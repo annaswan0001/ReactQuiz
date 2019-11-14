@@ -45,7 +45,7 @@ function Quiz({ history }) {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.get(`http://localhost:3000/data`);
+      const response = await axios.get(`http://localhost:3001/data`);
 
       dispatch({ type: "ADD_DATA", payload: response.data });
       let correct = response.data.map(({ id, correct }) => ({ id, correct }));
