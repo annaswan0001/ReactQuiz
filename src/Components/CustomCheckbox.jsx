@@ -4,26 +4,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import QuizContext from "../context";
+import {convertArrayToObject} from '../utils/utils'
 
-//вынести в утилс
-const convertArrayToObject = (array, key) => {
-  const initialValue = {};
-  return array.reduce((obj, item) => {
-    return {
-      ...obj,
-      [item[key]]: false
-    };
-  }, initialValue);
-};
-const convertArrayToObjectTrue = (array, key) => {
-  const initialValue = {};
-  return array.reduce((obj, item) => {
-    return {
-      ...obj,
-      [item[key]]: true
-    };
-  }, initialValue);
-};
 
 function CustomCheckBox({ options, id }) {
   const { state, dispatch } = useContext(QuizContext);
@@ -75,8 +57,6 @@ function CustomCheckBox({ options, id }) {
         (a, b) => ((a[b] = true), a),
         {}
       );
-      console.log(valueStorage);
-
       const arr2 = Object.assign({}, keyObj, ValueStorageObject);
       setState(arr2);
     }
@@ -102,7 +82,8 @@ function CustomCheckBox({ options, id }) {
 }
 
 CustomCheckBox.propTypes = {
-  options: PropTypes.array
+  options: PropTypes.array,
+  id: PropTypes.number
 };
 
 export default CustomCheckBox;

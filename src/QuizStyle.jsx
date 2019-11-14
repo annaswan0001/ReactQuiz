@@ -20,7 +20,8 @@ export const useStyles = makeStyles(theme => ({
     avatar: {
       backgroundColor: theme.palette.primary.main,
       width: "60px",
-      height: "60px"
+      height: "60px",
+      marginBottom: theme.spacing(2)
     },
     form: {
       width: "100%", // Fix IE 11 issue.
@@ -31,11 +32,6 @@ export const useStyles = makeStyles(theme => ({
     },
     typography: {
       marginTop: theme.spacing(2)
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-      maxWidth: 300
     },
     chips: {
       display: "flex",
@@ -56,5 +52,8 @@ export const useStyles = makeStyles(theme => ({
       marginRight: theme.spacing(2),
       marginTop: theme.spacing(2)
     },
+    title:{
+     marginTop: theme.spacing(2)
+    }
 
   }));

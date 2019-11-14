@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from 'prop-types';
 
 import CustomInput from "../Components/CustomInput";
 import CustomRadio from "../Components/CustomRadio";
@@ -14,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Question = ({ question,id, options, type }) => {
+const Question = ({ question, id, options, type }) => {
   const classes = useStyles();
 
   let answer = "";
@@ -48,3 +49,10 @@ const Question = ({ question,id, options, type }) => {
 };
 
 export default Question;
+
+Question.propTypes = {
+  question: PropTypes.string,
+  id:PropTypes.number,
+  options:PropTypes.array,
+  type:PropTypes.string
+};

@@ -16,7 +16,7 @@ import { withRouter } from "react-router";
 import { useStyles } from "./QuizStyle";
 import Copyright from "./Components/Copyright";
 import ErrorBoundary from "./ErrorBoundary";
-
+import PropTypes from 'prop-types';
 
 
 
@@ -27,7 +27,6 @@ function Quiz({ history }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = React.useState(false); //open ModalDialog
-
 
 
   useEffect(() => {
@@ -41,9 +40,6 @@ function Quiz({ history }) {
       getResults();
     }
   }, []);
-
-
-
 
   const getResults = async () => {
     setLoading(true);
@@ -121,7 +117,7 @@ function Quiz({ history }) {
     }
   };
 
-  
+
   return (
     <ErrorBoundary>
       <QuizContext.Provider value={{ state, dispatch }}>
@@ -150,7 +146,7 @@ function Quiz({ history }) {
               <React.Fragment>
                 <div className={classes.paper}>
                   <Avatar className={classes.avatar}>Quiz</Avatar>
-                  <Typography component="h1" variant="h5">
+                  <Typography classname={classes.title} component="h1" variant="h5">
                     Lets do it!
                   </Typography>
                   <form
@@ -211,4 +207,9 @@ function Quiz({ history }) {
     </ErrorBoundary>
   );
 }
+
+Quiz.propTypes = {
+  history: PropTypes.object
+};
+
 export default withRouter(Quiz);

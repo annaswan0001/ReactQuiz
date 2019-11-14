@@ -3,7 +3,7 @@ export default function reducer(state, action) {
     case "ADD_CURRENT_ANSWER":
       const updatedAnswer = action.payload;
       const updatedAnswerIndex = state.answers.findIndex(
-        t => t.id == action.payload.id
+        t => t.id === action.payload.id
       );
       if (updatedAnswerIndex > -1) {
         const newAnswers = [

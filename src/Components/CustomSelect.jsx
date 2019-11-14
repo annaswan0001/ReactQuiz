@@ -1,4 +1,4 @@
-import React, { useState , useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import FormControl from "@material-ui/core/FormControl";
 import Input from "@material-ui/core/Input";
@@ -33,7 +33,11 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     minWidth: "100%",
-    maxWidth: 300
+    maxWidth: 300,
+    minHeight: "50px"
+  },
+  select: {
+    padding: "5px 0"
   }
 }));
 
@@ -47,56 +51,49 @@ function getStyles(name, optionList, theme) {
 }
 
 function CustomSelect({ options, id }) {
-    const theme = useTheme();
-    const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles();
 
-const { state, dispatch } = useContext(QuizContext);
+  const { state, dispatch } = useContext(QuizContext);
 
   const [optionList, setoptionList] = React.useState([]);
   const handleChangeSelect = event => {
-    dispatch({ type: "RESET", payload: false })
+    dispatch({ type: "RESET", payload: false });
     setoptionList(event.target.value);
   };
 
-  useEffect(
-    () => {
-        if(optionList.length>0){
-            const answer = {
-                id,
-                correct:optionList
-            }
-            dispatch({ type: "ADD_CURRENT_ANSWER", payload: answer });
-        }
-    },
-    [optionList]
-  );
+  useEffect(() => {
+    if (optionList.length > 0) {
+      const answer = {
+        id,
+        correct: optionList
+      };
+      dispatch({ type: "ADD_CURRENT_ANSWER", payload: answer });
+    }
+  }, [optionList]);
 
-  useEffect(
-    () => {
-        if(state.reset){
-            setoptionList([])
-        }
-    },
-    [state.reset]
-  );
+  useEffect(() => {
+    if (state.reset) {
+      setoptionList([]);
+    }
+  }, [state.reset]);
 
-
-  useEffect(()=>{
-    const stateLocalStorage = localStorage.getItem('state');
-    if (stateLocalStorage === null){
-      return 
+  useEffect(() => {
+    const stateLocalStorage = localStorage.getItem("state");
+    if (stateLocalStorage === null) {
+      return;
     }
     const stateStorage = JSON.parse(stateLocalStorage);
-    const indexValueStorage = stateStorage.answers.find(x => x.id === id)
-    if(indexValueStorage){
+    const indexValueStorage = stateStorage.answers.find(x => x.id === id);
+    if (indexValueStorage) {
       setoptionList(indexValueStorage.correct);
     }
-  }, [])
-
+  }, []);
 
   return (
     <FormControl variant="outlined" className={classes.formControl}>
       <Select
+        className={classes.select}
         multiple
         value={optionList}
         onChange={handleChangeSelect}
@@ -119,14 +116,14 @@ const { state, dispatch } = useContext(QuizContext);
             {name}
           </MenuItem>
         ))}
-        
       </Select>
     </FormControl>
   );
 }
 
 CustomSelect.propTypes = {
-  options: PropTypes.array
+  options: PropTypes.array,
+  id:PropTypes.number
 };
 
 export default CustomSelect;
