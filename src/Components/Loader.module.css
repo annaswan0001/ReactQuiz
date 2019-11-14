@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Metrophobic);
+
+
+
+
+.loader {
+  width: 150px;
+  height: 150px;
+  display: block;
+  margin: auto;
+  position:relative;
+  margin-top:50%;
+}
+.text {
+  position: absolute;
+  transform: translate(0, -50%);
+  top: 50%;
+  width: 100%;
+  text-transform: uppercase;
+  color: black;
+  text-align: center;
+  animation: fade 2.5s ease infinite;
+}
+
+.circle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: spin 20s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade {
+  50% {
+    opacity: 0.15;
+  }
+}

@@ -1,62 +1,86 @@
-import React, {useContext, useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import QuizContext from "../context";
 
-
 //вынести в утилс
-const convertArrayToObject = (array, key) => { 
-    const initialValue = {};
-    return array.reduce((obj, item) => {
-      return {
-        ...obj,
-        [item[key]]: false
-      };
-    }, initialValue);
-  };
+const convertArrayToObject = (array, key) => {
+  const initialValue = {};
+  return array.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[key]]: false
+    };
+  }, initialValue);
+};
+const convertArrayToObjectTrue = (array, key) => {
+  const initialValue = {};
+  return array.reduce((obj, item) => {
+    return {
+      ...obj,
+      [item[key]]: true
+    };
+  }, initialValue);
+};
 
-
-function CustomCheckBox({ options, id }) { 
+function CustomCheckBox({ options, id }) {
   const { state, dispatch } = useContext(QuizContext);
+  const sortOptions = options.sort();
   const [value, setState] = React.useState(
-    convertArrayToObject(options, "text")
+    convertArrayToObject(sortOptions, "text")
   );
   const handleChangeCheckBox = name => event => {
-    // dispatch({ type: "RESET", payload: false })
+    dispatch({ type: "RESET", payload: false });
     setState({ ...value, [name]: event.target.checked });
-   
   };
 
-  useEffect(
-    () => {
-        if(value){
-            let answers = [];
-            for (let key in value) {
-                if (value[key]){
-                    answers.push(key);
-                }
-            }
-            const answer = {
-                id,
-                correct:answers
-            }
-           
-            dispatch({ type: "ADD_CURRENT_ANSWER", payload: answer });
+  useEffect(() => {
+    if (value) {
+      let answers = [];
+      for (let key in value) {
+        if (value[key]) {
+          answers.push(key);
         }
-    },
-    [value]
-  );
+      }
+      const answer = {
+        id,
+        correct: answers
+      };
 
-  useEffect(
-    () => {
-        if(state.reset){
-            setState(convertArrayToObject(options, "text"))
-        }
-    },
-    [state.reset]
-  );
+      dispatch({ type: "ADD_CURRENT_ANSWER", payload: answer });
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (state.reset) {
+      setState(convertArrayToObject(options, "text"));
+    }
+  }, [state.reset]);
+
+  useEffect(() => {
+    const stateLocalStorage = localStorage.getItem("state");
+    if (stateLocalStorage === null) {
+      return;
+    }
+    const stateStorage = JSON.parse(stateLocalStorage);
+    const indexValueStorage = stateStorage.answers.find(x => x.id === id);
+
+    if (indexValueStorage) {
+      let valueStorage = indexValueStorage.correct;
+      let keyObj = convertArrayToObject(sortOptions, "text");
+
+      let ValueStorageObject = valueStorage.reduce(
+        (a, b) => ((a[b] = true), a),
+        {}
+      );
+      console.log(valueStorage);
+
+      const arr2 = Object.assign({}, keyObj, ValueStorageObject);
+      setState(arr2);
+    }
+  }, []);
 
   return (
     <FormGroup>
@@ -73,7 +97,6 @@ function CustomCheckBox({ options, id }) {
           label={text}
         />
       ))}
-    
     </FormGroup>
   );
 }

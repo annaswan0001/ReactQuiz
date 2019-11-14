@@ -1,15 +1,16 @@
 import React, { useReducer, useContext } from "react";
 import ReactDOM from "react-dom";
-import Quiz from "./Quiz.js";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/core/styles";
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Route,
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
 
+
+import Quiz from "./Quiz.js";
 import quizReducer from "./reducer";
 import QuizContext from "./context";
 import Results from './Views/Results/Results'
@@ -42,7 +43,7 @@ const App = () => {
           <Route path="/">
           <Quiz />
           </Route>
-        </Switch> 
+    </Switch> 
     </QuizContext.Provider>
     </Router>
   );

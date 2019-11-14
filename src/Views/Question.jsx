@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+
 import CustomInput from "../Components/CustomInput";
 import CustomRadio from "../Components/CustomRadio";
 import CustomCheckBox from "../Components/CustomCheckbox";
@@ -33,7 +34,7 @@ const Question = ({ question,id, options, type }) => {
       break;
     default:
       return answer;
-      break;
+      
   }
 
   return (

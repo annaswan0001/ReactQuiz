@@ -11,6 +11,7 @@ function CustomInput({ id }) {
   const { state, dispatch } = useContext(QuizContext);
   
   const handleChange = event => {
+    dispatch({ type: "RESET", payload: false })
     const inputValue = event.target.value;
     if (inputValue === "") {
       setValue(inputValue);
@@ -20,15 +21,18 @@ function CustomInput({ id }) {
   };
 
   useEffect(()=>{
-    const state = localStorage.getItem('state');
-    if (state === null){
+    const stateLocalStorage = localStorage.getItem('state');
+    if (stateLocalStorage === null){
       return 
     }
-    const answersLocalStorage = JSON.parse(state);
-    console.log(answersLocalStorage)
-    // const valueFromLocalStorage = answersLocalStorage.map(idLocal=>idLocal===id)
-    // console.log("значение локал",valueFromLocalStorage)
-  })
+    const stateStorage = JSON.parse(stateLocalStorage);
+    const indexValueStorage = stateStorage.answers.find(x => x.id === id)
+    
+    if(indexValueStorage){
+      setValue(indexValueStorage.correct[0]);
+    }
+  }, [])
+
   useEffect(() => {
     if (value.length > 0) {
       const answer = {
@@ -40,6 +44,7 @@ function CustomInput({ id }) {
     }
   }, [value]);
 
+  
   useEffect(() => {
     if (state.reset) {
       setValue("");

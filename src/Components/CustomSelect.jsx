@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
 import QuizContext from "../context";
 
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 58;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
@@ -54,7 +54,7 @@ const { state, dispatch } = useContext(QuizContext);
 
   const [optionList, setoptionList] = React.useState([]);
   const handleChangeSelect = event => {
-    // dispatch({ type: "RESET", payload: false })
+    dispatch({ type: "RESET", payload: false })
     setoptionList(event.target.value);
   };
 
@@ -81,9 +81,21 @@ const { state, dispatch } = useContext(QuizContext);
   );
 
 
+  useEffect(()=>{
+    const stateLocalStorage = localStorage.getItem('state');
+    if (stateLocalStorage === null){
+      return 
+    }
+    const stateStorage = JSON.parse(stateLocalStorage);
+    const indexValueStorage = stateStorage.answers.find(x => x.id === id)
+    if(indexValueStorage){
+      setoptionList(indexValueStorage.correct);
+    }
+  }, [])
+
 
   return (
-    <FormControl className={classes.formControl}>
+    <FormControl variant="outlined" className={classes.formControl}>
       <Select
         multiple
         value={optionList}

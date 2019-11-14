@@ -1,41 +1,27 @@
 import React, {useContext, useState,useEffect} from 'react';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import QuizContext from '../../context'
 import Button from "@material-ui/core/Button";
+import { useStyles } from './ExpansionPanelStyle.js';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-    
-  },
-  summary:{
-    backgroundColor:theme.palette.primary.main,
-  },
-  button:{
-    marginRight: theme.spacing(2),
-  }
-}));
+import QuizContext from '../../context'
+
+
 
 
 export default function SimpleExpansionPanel() {
   const [data, setData] = useState("");
-
+  const [falseAnswer, setFalseAnswer] = useState("");
 
 useEffect(() => {
   if(localStorage.getItem('state')){
     const answersLocalStorage = localStorage.getItem('state');
     const quiz = JSON.parse(answersLocalStorage );
     setData(quiz.data)
+    setFalseAnswer(quiz.falseAnswer)
     // const valueFromLocalStorage = answersLocalStorage.map(idLocal=>idLocal===id)
     // console.log("значение локал",valueFromLocalStorage)
   }
@@ -55,10 +41,13 @@ useEffect(() => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Typography>
-            {data.length>0 && data.map(({question,correct}) =>
+          {falseAnswer.length>0 && <p className={classes.wrongAnswer}>You wrong answers are:</p>}
+          {falseAnswer.length>0 && falseAnswer.map(({id})=><span>{id},</span>)}
+          <p >Correct answers:</p>
+            {data.length>0 && data.map(({question,correct,id}) =>
            < div>  
-           <p>{question}</p>
-           {correct.map(answer=><Button variant="contained" className={classes.button} color="secondary">{answer}</Button>)}
+           <p>{id}.{question}</p>
+           {correct.map(answer=><Button key={answer.id} variant="contained" className={classes.button} color="secondary">{answer}</Button>)}
            
            </div>
           

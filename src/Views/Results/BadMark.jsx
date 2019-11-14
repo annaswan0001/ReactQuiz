@@ -12,7 +12,7 @@ export default function Results() {
       <Typography variant="h2" component="h1" gutterBottom>
         {state.trueAnswer.length >= 1
           ? `You have ${state.trueAnswer.length} correct answer`
-          : `You have ${state.trueAnswer.length} correct answer. We are sorry! You should lear more!`}
+          : `You have ${state.trueAnswer.length} correct answer. We are sorry! You should learn more!`}
       </Typography>
 
   );
